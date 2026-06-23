@@ -1,0 +1,24 @@
+name: Content correction
+description: Propose a correction with provenance and permission.
+title: "[Content] "
+labels: ["content"]
+body:
+  - type: textarea
+    id: item
+    attributes:
+      label: Content item and proposed correction
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source, license or permission, verification method, and uncertainty
+    validations:
+      required: true
+  - type: checkboxes
+    id: rights
+    attributes:
+      label: Rights confirmation
+      options:
+        - label: This does not reproduce association guidebook or proprietary map content.
+          required: true

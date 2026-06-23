@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "MacKaye Fieldbook",
+    "slug": "mackaye-fieldbook",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "mackaye-fieldbook",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/images/icon.png",
+      "bundleIdentifier": "com.jwsmith.mackayefieldbook"
+    },
+    "android": {
+      "package": "com.jwsmith.mackayefieldbook",
+      "adaptiveIcon": {
+        "backgroundColor": "#285B3C",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "MacKaye Fieldbook uses your location only after you explicitly start a hike."
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#285B3C",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 88
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

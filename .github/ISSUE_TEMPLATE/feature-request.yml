@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose an offline-first, privacy-conscious improvement.
+title: "[Feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Offline, battery, privacy, accessibility, and safety tradeoffs
+    validations:
+      required: true
