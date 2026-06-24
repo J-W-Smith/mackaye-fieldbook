@@ -16,6 +16,7 @@ import {
   stopTrackingAndSync,
 } from "@mackaye/sync-core";
 import {
+  getStorageMode,
   pendingOutboxCount,
   persistActivity,
   readSetting,
@@ -32,7 +33,9 @@ interface AppContextValue {
   networkMasterEnabled: boolean;
   pendingChanges: number;
   lastSyncAt: string | null;
+  storageMode: string;
   startHike(): Promise<void>;
+  startSimulation(): Promise<void>;
   stopAllActivity(): Promise<void>;
   resumeHike(): Promise<void>;
   setBatteryMode(mode: BatteryMode): Promise<void>;
@@ -55,10 +58,12 @@ export function AppProvider({ children }: PropsWithChildren) {
   const [networkMasterEnabled, setNetworkEnabledState] = useState(true);
   const [pendingChanges, setPendingChanges] = useState(0);
   const [lastSyncAt, setLastSyncAt] = useState<string | null>(null);
+  const [storageMode, setStorageMode] = useState(getStorageMode());
 
   const refreshDiagnostics = useCallback(async () => {
     setPendingChanges(await pendingOutboxCount());
     setLastSyncAt(await readSetting<string | null>("lastSyncAt", null));
+    setStorageMode(getStorageMode());
   }, []);
 
   useEffect(() => {
@@ -87,6 +92,15 @@ export function AppProvider({ children }: PropsWithChildren) {
   const startHike = useCallback(async () => {
     tracking.current.setMode(batteryModeState);
     await tracking.current.start();
+    let snapshot = gate.current.transition("TRACKING_LOCAL");
+    snapshot = gate.current.setNetworkEnabled(networkMasterEnabled);
+    setActivity(snapshot);
+    await persistActivity(snapshot);
+  }, [batteryModeState, networkMasterEnabled]);
+
+  const startSimulation = useCallback(async () => {
+    tracking.current.setMode(batteryModeState);
+    await tracking.current.startSimulation();
     let snapshot = gate.current.transition("TRACKING_LOCAL");
     snapshot = gate.current.setNetworkEnabled(networkMasterEnabled);
     setActivity(snapshot);
@@ -149,7 +163,9 @@ export function AppProvider({ children }: PropsWithChildren) {
       networkMasterEnabled,
       pendingChanges,
       lastSyncAt,
+      storageMode,
       startHike,
+      startSimulation,
       stopAllActivity,
       resumeHike,
       setBatteryMode,
@@ -171,7 +187,9 @@ export function AppProvider({ children }: PropsWithChildren) {
       setNetworkMasterEnabled,
       setSyncPolicy,
       startHike,
+      startSimulation,
       stopAllActivity,
+      storageMode,
       syncNow,
       syncPolicyState,
     ],

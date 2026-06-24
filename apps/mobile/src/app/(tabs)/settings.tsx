@@ -6,7 +6,7 @@ import { batteryProfiles } from "@mackaye/domain";
 import { Button, Card, Heading, Muted, Screen } from "@/components/ui";
 import { useApp } from "@/context/app-context";
 import { exportLocalData } from "@/services/export";
-import { backgroundTrackingFeatureEnabled } from "@/services/tracking";
+import { backgroundTrackingFeatureEnabled, trackingPlatformLabel } from "@/services/tracking";
 import { deleteAllLocalData } from "@/db/database";
 import { usePalette } from "@/theme";
 
@@ -86,6 +86,13 @@ export default function SettingsScreen() {
       <Card>
         <Text style={[styles.subheading, { color: colors.text }]}>Diagnostic activity panel</Text>
         <Muted>Location permission: {permission}</Muted>
+        <Muted>Local storage: {app.storageMode}</Muted>
+        {app.storageMode === "Memory-only fallback" && (
+          <Text style={{ color: colors.danger, fontSize: 17, fontWeight: "800" }}>
+            Warning: this browser cannot use IndexedDB. Records will be lost when the page closes.
+          </Text>
+        )}
+        <Muted>Tracking mode: {trackingPlatformLabel}</Muted>
         <Muted>GPS: {app.activity.gpsActive ? "ACTIVE" : "OFF"}</Muted>
         <Muted>
           Background tracking: {backgroundTrackingFeatureEnabled ? "ACTIVE" : "DISABLED"}

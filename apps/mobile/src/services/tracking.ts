@@ -29,6 +29,10 @@ export class ExpoForegroundTrackingService implements TrackingService {
     this.update({ active: true, paused: false });
   }
 
+  async startSimulation() {
+    this.update({ active: true, paused: false });
+  }
+
   async pause() {
     this.subscription?.remove();
     this.subscription = null;
@@ -67,3 +71,4 @@ function accuracyFor(mode: BatteryMode) {
 }
 
 export const backgroundTrackingFeatureEnabled = false;
+export const trackingPlatformLabel = "Foreground device tracking";

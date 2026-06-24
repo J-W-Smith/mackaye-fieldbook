@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://c4-consultant.com/demos/mackaye-fieldbook/_sitemap

@@ -14,6 +14,13 @@ export default function AboutScreen() {
       </Card>
       <Card>
         <Body>
+          Web companion records use IndexedDB in supported browsers. Browser location is
+          foreground-only, may be throttled in inactive tabs, and never continues after the tab
+          closes.
+        </Body>
+      </Card>
+      <Card>
+        <Body>
           It is not affiliated with or endorsed by the Benton MacKaye Trail Association. It contains
           no association logos, guidebook text, photographs, proprietary maps, or real trail
           guidance.

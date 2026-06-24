@@ -3,7 +3,16 @@ import expo from "eslint-config-expo/flat.js";
 import { configs as typescriptConfigs } from "typescript-eslint";
 
 export default [
-  { ignores: ["**/node_modules/**", "**/dist/**", "**/.expo/**", "coverage/**"] },
+  {
+    ignores: [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/dist-web/**",
+      "**/.tools/**",
+      "**/.expo/**",
+      "coverage/**",
+    ],
+  },
   js.configs.recommended,
   ...typescriptConfigs.recommended,
   ...expo,

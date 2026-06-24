@@ -1,6 +1,12 @@
 import * as SQLite from "expo-sqlite";
 import type { ActivitySnapshot, Direction, JournalEntry, Journey } from "@mackaye/domain";
 
+export type StorageMode = "SQLite";
+
+export function getStorageMode(): StorageMode {
+  return "SQLite";
+}
+
 let databasePromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
 export async function getDatabase() {

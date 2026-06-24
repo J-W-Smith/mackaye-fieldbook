@@ -15,6 +15,7 @@ export function Screen({ children }: PropsWithChildren) {
   const colors = usePalette();
   return (
     <ScrollView
+      nativeID="main-content"
       contentContainerStyle={[styles.screen, { backgroundColor: colors.background }]}
       keyboardShouldPersistTaps="handled"
     >
@@ -102,7 +103,14 @@ export function Button({
 }
 
 const styles = StyleSheet.create({
-  screen: { flexGrow: 1, padding: 18, gap: 14 },
+  screen: {
+    flexGrow: 1,
+    width: "100%",
+    maxWidth: 1080,
+    alignSelf: "center",
+    padding: 18,
+    gap: 14,
+  },
   banner: { borderWidth: 2, borderRadius: 10, padding: 12 },
   bannerText: { fontSize: 15, fontWeight: "800", lineHeight: 21 },
   heading: { fontSize: 28, fontWeight: "800", lineHeight: 34 },

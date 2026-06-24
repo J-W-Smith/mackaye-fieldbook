@@ -6,6 +6,8 @@ MacKaye Fieldbook is an independent, offline-first field-guide and personal hiki
 
 **The trail guide that remembers your journey.**
 
+Web companion deployment target: <https://c4-consultant.com/demos/mackaye-fieldbook/>
+
 ## What works
 
 - Five-tab Expo app for Android, iPhone, and web development
@@ -51,6 +53,28 @@ pnpm --filter @mackaye/mobile start
 ```
 
 On macOS/Linux, use the same commands in a POSIX shell. Press `a` for Android, `i` for iOS on macOS, or scan the Expo QR code from a device.
+
+## Web companion
+
+Run local web development:
+
+```powershell
+pnpm --filter @mackaye/mobile web
+```
+
+Build and verify the C4 subdirectory export:
+
+```powershell
+pnpm export:web
+pnpm verify:web-export
+pnpm deploy:web -- --dry-run
+```
+
+The production build uses `/demos/mackaye-fieldbook` as its Expo base URL and writes only deployable static files to `apps/mobile/dist-web`. The focused FTP script reads credentials from the shell environment and never stores them in source.
+
+Web records use IndexedDB when supported. Browser location is foreground-only, may be throttled when a tab is inactive, and ends when the tab closes. Safe simulation works without location permission. Background GPS, cloud accounts, real maps, and real trail content are not implemented.
+
+See [docs/web-companion.md](docs/web-companion.md), [docs/web-deployment.md](docs/web-deployment.md), and [docs/web-platform-differences.md](docs/web-platform-differences.md).
 
 ## Safety and privacy
 

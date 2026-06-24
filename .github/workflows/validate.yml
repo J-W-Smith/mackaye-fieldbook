@@ -27,3 +27,5 @@ jobs:
       - run: pnpm validate:content
       - run: pnpm format:check
       - run: pnpm exec expo-doctor apps/mobile
+      - run: pnpm export:web
+      - run: pnpm verify:web-export

@@ -77,6 +77,10 @@ export default function SectionDetailsScreen() {
   );
 }
 
+export function generateStaticParams() {
+  return demoContent.sections.map((section) => ({ id: section.id }));
+}
+
 const styles = StyleSheet.create({
   toggle: { flexDirection: "row", gap: 10 },
   toggleButton: { flex: 1 },

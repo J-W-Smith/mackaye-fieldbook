@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Platform, StyleSheet, Text } from "react-native";
 import { Button, Card, Heading, Muted, Screen } from "@/components/ui";
 import { useApp } from "@/context/app-context";
 import { usePalette } from "@/theme";
 
 export default function ActiveHikeScreen() {
   const colors = usePalette();
-  const { activity, batteryMode, startHike, stopAllActivity, resumeHike } = useApp();
+  const { activity, batteryMode, startHike, startSimulation, stopAllActivity, resumeHike } =
+    useApp();
   const [undoVisible, setUndoVisible] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
@@ -54,11 +55,21 @@ export default function ActiveHikeScreen() {
         <Muted>Uploads: {activity.uploadsActive ? "ACTIVE" : "OFF"}</Muted>
       </Card>
       {activity.state === "GUIDE_ONLY" && (
-        <Button
-          title="START LOCAL HIKE"
-          onPress={() => void start()}
-          accessibilityHint="Requests foreground location permission and starts local tracking"
-        />
+        <>
+          <Button
+            title={Platform.OS === "web" ? "START FOREGROUND BROWSER TRACKING" : "START LOCAL HIKE"}
+            onPress={() => void start()}
+            accessibilityHint="Requests foreground location permission and starts local tracking"
+          />
+          {Platform.OS === "web" && (
+            <Button
+              title="START SAFE SIMULATION"
+              tone="neutral"
+              onPress={() => void startSimulation()}
+              accessibilityHint="Demonstrates activity controls without requesting browser location"
+            />
+          )}
+        </>
       )}
       {!paused && activity.state !== "GUIDE_ONLY" && (
         <Button
@@ -94,8 +105,9 @@ export default function ActiveHikeScreen() {
       )}
       {message && <Text style={{ color: colors.danger, fontSize: 17 }}>{message}</Text>}
       <Muted>
-        Background tracking is disabled in this phase. Starting a hike is the only action that
-        requests location permission.
+        {Platform.OS === "web"
+          ? "Foreground browser tracking works only while this page remains active. Browsers may throttle or suspend it, and closing the tab ends it. Simulation mode requests no location permission."
+          : "Background tracking is disabled in this phase. Starting a hike is the only action that requests location permission."}
       </Muted>
     </Screen>
   );
